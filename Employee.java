@@ -4,13 +4,19 @@ public class Employee {
     private String email;
     private double salary;
     private int departmentId;
+    private Integer managerId;
 
     public Employee(int id, String name, String email, double salary, int departmentId) {
+    this(id, name, email, salary, departmentId,null);
+}
+
+    public Employee(int id, String name, String email, double salary, int departmentId, Integer managerID) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.salary = salary;
         this.departmentId = departmentId;
+        this.managerId = managerId;
     }
 
     public int getId() {
@@ -52,6 +58,12 @@ public class Employee {
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
+    public Integer getManagerId() {
+        return managerId;
+    }
+    public void setManagerId(Integer managerId) {
+    this.managerId = managerId;
+    }
 
     @Override
     public String toString() {
@@ -60,6 +72,7 @@ public class Employee {
                 ", email='" + email + '\'' +
                 ", salary=" + salary +
                 ", departmentId=" + departmentId +
+                ", managerId=" +managerId +
                 '}';
     }
 }

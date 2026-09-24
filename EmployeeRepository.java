@@ -1,9 +1,8 @@
 import java.util.List;
 
-public interface EmployeeRepository {
-    Employee add(Employee employee);
-    Employee update(Employee employee);
-    boolean delete(int id);
-    Employee findById(int id);
-    List<Employee> findAll();
+public interface EmployeeRepository  extends Repository<Employee, Integer> {
+
+    List<Employee> findByDepartment(int departmentId);
+
+    List<Employee> findByManager(int managerId);
 }

@@ -9,23 +9,39 @@ public class EmployeeRepositoryInMemoryImpl implements EmployeeRepository {
     private final Map<Integer, List<Employee>> employeesByManager= new HashMap<>();
     @Override
     public Employee add(Employee employee) {
-        employees.add(employee);
-        employeesByDepartment
-                .computeIfAbsent(
-                        employee.getDepartmentId(),
-                        key -> new ArrayList<>()).add(employee);
-        if (employee.getManagerId() != null) {
-            employeesByManager.computeIfAbsent( employee.getManagerId(),key -> new ArrayList<>()).add(employee);
+
+    for (Employee existingEmployee : employees) {
+        if (existingEmployee.getId() == employee.getId()) {
+            throw new DuplicateEmployeeException(
+                    "Employee with ID " + employee.getId() + " already exists"
+            );
         }
-        return employee;
     }
+
+    employees.add(employee);
+
+    employeesByDepartment
+            .computeIfAbsent(
+                    employee.getDepartmentId(),
+                    key -> new ArrayList<>()
+            )
+            .add(employee);
+
+    if (employee.getManagerId() != null) {
+        employeesByManager
+                .computeIfAbsent(
+                        employee.getManagerId(),
+                        key -> new ArrayList<>()
+                )
+                .add(employee);
+    }
+
+    return employee;
+}
     @Override
     public Employee update(Employee employee) {
-
         for (int i = 0; i < employees.size(); i++) {
-
             Employee oldEmployee = employees.get(i);
-
             if (oldEmployee.getId() == employee.getId()) {
                 removeFromDepartmentIndex(oldEmployee);
                 removeFromManagerIndex(oldEmployee);

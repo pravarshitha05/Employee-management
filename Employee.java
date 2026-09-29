@@ -6,6 +6,9 @@ public class Employee {
     private int departmentId;
     private Integer managerId;
 
+    public Employee() {
+}
+
     public Employee(int id, String name, String email, double salary, int departmentId) {
     this(id, name, email, salary, departmentId,null);
 }
